@@ -1,0 +1,215 @@
+﻿{
+    "frames":  {
+                   "scout":  {
+                                 "frame":  {
+                                               "x":  2,
+                                               "y":  2,
+                                               "w":  96,
+                                               "h":  63
+                                           },
+                                 "rotated":  false,
+                                 "trimmed":  false,
+                                 "spriteSourceSize":  {
+                                                          "x":  0,
+                                                          "y":  0,
+                                                          "w":  96,
+                                                          "h":  63
+                                                      },
+                                 "sourceSize":  {
+                                                    "w":  96,
+                                                    "h":  63
+                                                }
+                             },
+                   "fighter":  {
+                                   "frame":  {
+                                                 "x":  100,
+                                                 "y":  2,
+                                                 "w":  96,
+                                                 "h":  61
+                                             },
+                                   "rotated":  false,
+                                   "trimmed":  false,
+                                   "spriteSourceSize":  {
+                                                            "x":  0,
+                                                            "y":  0,
+                                                            "w":  96,
+                                                            "h":  61
+                                                        },
+                                   "sourceSize":  {
+                                                      "w":  96,
+                                                      "h":  61
+                                                  }
+                               },
+                   "cruiser":  {
+                                   "frame":  {
+                                                 "x":  198,
+                                                 "y":  2,
+                                                 "w":  96,
+                                                 "h":  61
+                                             },
+                                   "rotated":  false,
+                                   "trimmed":  false,
+                                   "spriteSourceSize":  {
+                                                            "x":  0,
+                                                            "y":  0,
+                                                            "w":  96,
+                                                            "h":  61
+                                                        },
+                                   "sourceSize":  {
+                                                      "w":  96,
+                                                      "h":  61
+                                                  }
+                               },
+                   "artillery":  {
+                                     "frame":  {
+                                                   "x":  296,
+                                                   "y":  2,
+                                                   "w":  96,
+                                                   "h":  53
+                                               },
+                                     "rotated":  false,
+                                     "trimmed":  false,
+                                     "spriteSourceSize":  {
+                                                              "x":  0,
+                                                              "y":  0,
+                                                              "w":  96,
+                                                              "h":  53
+                                                          },
+                                     "sourceSize":  {
+                                                        "w":  96,
+                                                        "h":  53
+                                                    }
+                                 },
+                   "flagship":  {
+                                    "frame":  {
+                                                  "x":  394,
+                                                  "y":  2,
+                                                  "w":  192,
+                                                  "h":  129
+                                              },
+                                    "rotated":  false,
+                                    "trimmed":  false,
+                                    "spriteSourceSize":  {
+                                                             "x":  0,
+                                                             "y":  0,
+                                                             "w":  192,
+                                                             "h":  129
+                                                         },
+                                    "sourceSize":  {
+                                                       "w":  192,
+                                                       "h":  129
+                                                   }
+                                },
+                   "scout_sw":  {
+                                    "frame":  {
+                                                  "x":  588,
+                                                  "y":  2,
+                                                  "w":  96,
+                                                  "h":  59
+                                              },
+                                    "rotated":  false,
+                                    "trimmed":  false,
+                                    "spriteSourceSize":  {
+                                                             "x":  0,
+                                                             "y":  0,
+                                                             "w":  96,
+                                                             "h":  59
+                                                         },
+                                    "sourceSize":  {
+                                                       "w":  96,
+                                                       "h":  59
+                                                   }
+                                },
+                   "fighter_sw":  {
+                                      "frame":  {
+                                                    "x":  686,
+                                                    "y":  2,
+                                                    "w":  96,
+                                                    "h":  69
+                                                },
+                                      "rotated":  false,
+                                      "trimmed":  false,
+                                      "spriteSourceSize":  {
+                                                               "x":  0,
+                                                               "y":  0,
+                                                               "w":  96,
+                                                               "h":  69
+                                                           },
+                                      "sourceSize":  {
+                                                         "w":  96,
+                                                         "h":  69
+                                                     }
+                                  },
+                   "cruiser_sw":  {
+                                      "frame":  {
+                                                    "x":  784,
+                                                    "y":  2,
+                                                    "w":  96,
+                                                    "h":  61
+                                                },
+                                      "rotated":  false,
+                                      "trimmed":  false,
+                                      "spriteSourceSize":  {
+                                                               "x":  0,
+                                                               "y":  0,
+                                                               "w":  96,
+                                                               "h":  61
+                                                           },
+                                      "sourceSize":  {
+                                                         "w":  96,
+                                                         "h":  61
+                                                     }
+                                  },
+                   "artillery_sw":  {
+                                        "frame":  {
+                                                      "x":  882,
+                                                      "y":  2,
+                                                      "w":  96,
+                                                      "h":  62
+                                                  },
+                                        "rotated":  false,
+                                        "trimmed":  false,
+                                        "spriteSourceSize":  {
+                                                                 "x":  0,
+                                                                 "y":  0,
+                                                                 "w":  96,
+                                                                 "h":  62
+                                                             },
+                                        "sourceSize":  {
+                                                           "w":  96,
+                                                           "h":  62
+                                                       }
+                                    },
+                   "flagship_sw":  {
+                                       "frame":  {
+                                                     "x":  980,
+                                                     "y":  2,
+                                                     "w":  192,
+                                                     "h":  104
+                                                 },
+                                       "rotated":  false,
+                                       "trimmed":  false,
+                                       "spriteSourceSize":  {
+                                                                "x":  0,
+                                                                "y":  0,
+                                                                "w":  192,
+                                                                "h":  104
+                                                            },
+                                       "sourceSize":  {
+                                                          "w":  192,
+                                                          "h":  104
+                                                      }
+                                   }
+               },
+    "meta":  {
+                 "app":  "build-assets.ps1 (Free Tex Packer compatible JSON hash)",
+                 "version":  "1.0",
+                 "image":  "units.png",
+                 "format":  "RGBA8888",
+                 "size":  {
+                              "h":  133,
+                              "w":  1174
+                          },
+                 "scale":  "1"
+             }
+}

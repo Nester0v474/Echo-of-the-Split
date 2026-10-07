@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Эхо Раскола</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #0a0a12;
+      }
+
+      #game-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+
+      #game-container:fullscreen,
+      #game-container:-webkit-full-screen {
+        width: 100vw;
+        height: 100vh;
+        background: #0a0a12;
+      }
+
+      .settings-overlay {
+        display: none;
+        pointer-events: none;
+        position: absolute;
+        inset: 0;
+        z-index: 20;
+        align-items: center;
+        justify-content: center;
+        background: #0b0b0b;
+        font-family: system-ui, "Segoe UI", sans-serif;
+        color: #f4f4f5;
+      }
+
+      .settings-overlay.is-open {
+        display: flex;
+        pointer-events: auto;
+      }
+
+      .settings-panel {
+        width: min(520px, calc(100% - 48px));
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 22px;
+      }
+
+      .settings-title {
+        margin: 0;
+        text-align: center;
+        font-size: 34px;
+        font-weight: 650;
+        letter-spacing: -0.03em;
+        color: #fff;
+      }
+
+      .settings-hint {
+        margin: -8px 0 8px;
+        text-align: center;
+        font-size: 15px;
+        line-height: 1.45;
+        color: #a1a1aa;
+      }
+
+      .settings-block {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .settings-label {
+        font-size: 15px;
+        color: #e4e4e7;
+      }
+
+      .settings-segment {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 12px;
+      }
+
+      .settings-chip,
+      .settings-btn,
+      .settings-toggle-row {
+        appearance: none;
+        border: 0;
+        cursor: pointer;
+        font: inherit;
+      }
+
+      .settings-chip {
+        height: 44px;
+        border-radius: 999px;
+        background: #f4f4f5;
+        color: #18181b;
+        font-size: 15px;
+        font-weight: 500;
+      }
+
+      .settings-chip.is-active {
+        background: #0f172a;
+        color: #fff;
+      }
+
+      .settings-toggle-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 6px 0;
+        background: transparent;
+        color: #f4f4f5;
+        text-align: left;
+        font-size: 16px;
+      }
+
+      .settings-switch {
+        position: relative;
+        flex: 0 0 48px;
+        width: 48px;
+        height: 28px;
+        border-radius: 999px;
+        background: #3f3f46;
+        transition: background 0.18s ease;
+      }
+
+      .settings-switch::after {
+        content: "";
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: #fff;
+        transition: transform 0.18s ease;
+      }
+
+      .settings-toggle-row.is-on .settings-switch {
+        background: #3b82f6;
+      }
+
+      .settings-toggle-row.is-on .settings-switch::after {
+        transform: translateX(20px);
+      }
+
+      .settings-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        min-height: 50px;
+        border-radius: 999px;
+        font-size: 16px;
+        font-weight: 500;
+      }
+
+      .settings-btn-light {
+        background: #f4f4f5;
+        color: #18181b;
+      }
+
+      .settings-btn:disabled {
+        opacity: 0.38;
+        cursor: default;
+        filter: none;
+      }
+
+      .settings-btn-primary {
+        background: #2563eb;
+        color: #fff;
+        font-weight: 600;
+      }
+
+      .settings-chip:hover,
+      .settings-btn-light:hover {
+        filter: brightness(0.96);
+      }
+
+      .settings-btn-primary:hover {
+        background: #1d4ed8;
+      }
+
+      .settings-chip:focus-visible,
+      .settings-btn:focus-visible,
+      .settings-toggle-row:focus-visible {
+        outline: 2px solid #60a5fa;
+        outline-offset: 3px;
+      }
+
+      .campaign-tooltip {
+        position: absolute;
+        z-index: 15;
+        transform: translate(-50%, calc(-100% - 14px));
+        padding: 6px 12px;
+        border-radius: 8px;
+        border: 1px solid rgba(125, 216, 232, 0.45);
+        background: #0b1220ee;
+        color: #e6f0ff;
+        font-family: system-ui, "Segoe UI", sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        white-space: nowrap;
+        pointer-events: none;
+      }
+
+      .rotate-device {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 50;
+        align-items: center;
+        justify-content: center;
+        background: #0b0b0b;
+        color: #f4f4f5;
+        font-family: system-ui, "Segoe UI", sans-serif;
+        text-align: center;
+        padding: 24px;
+      }
+
+      .rotate-device.is-on {
+        display: flex;
+      }
+
+      .rotate-device-card {
+        max-width: 360px;
+      }
+
+      .rotate-device-icon {
+        font-size: 64px;
+        line-height: 1;
+        margin-bottom: 16px;
+        color: #7dd8e8;
+      }
+
+      .rotate-device p {
+        font-size: 22px;
+        font-weight: 600;
+        line-height: 1.35;
+      }
+
+      .battle-tutorial {
+        position: absolute;
+        inset: 0;
+        z-index: 25;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #0b0b0bcc;
+        font-family: system-ui, "Segoe UI", sans-serif;
+        color: #f4f4f5;
+      }
+
+      .battle-tutorial-card {
+        width: min(560px, calc(100% - 32px));
+        padding: 28px 28px 24px;
+        border-radius: 16px;
+        background: #111827;
+        border: 1px solid #334155;
+      }
+
+      .battle-tutorial-card h2 {
+        margin: 0 0 16px;
+        font-size: 28px;
+        font-weight: 650;
+        text-align: center;
+      }
+
+      .battle-tutorial-card ol {
+        margin: 0 0 22px 22px;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        font-size: 16px;
+        line-height: 1.45;
+        color: #e4e4e7;
+      }
+
+      .battle-tutorial-card .settings-btn {
+        width: 100%;
+      }
+
+      .battle-chrome,
+      .campaign-chrome {
+        position: absolute;
+        inset: 0;
+        z-index: 18;
+        pointer-events: none;
+      }
+
+      .battle-status {
+        position: absolute;
+        left: 16px;
+        top: 12px;
+        max-width: min(52%, 640px);
+        color: #cfe3ff;
+        font: 700 18px/1.25 system-ui, "Segoe UI", sans-serif;
+        text-shadow: 0 1px 8px #04070ecc;
+      }
+
+      .battle-status-wave {
+        margin-top: 4px;
+        font-size: 14px;
+        font-weight: 650;
+        color: #ffb454;
+      }
+
+      .battle-chrome-left {
+        position: absolute;
+        left: 16px;
+        top: 72px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        pointer-events: auto;
+      }
+
+      .battle-chrome-btn,
+      .campaign-fight,
+      .battle-chrome-end {
+        appearance: none;
+        border: 0;
+        cursor: pointer;
+        pointer-events: auto;
+        font: 700 15px/1.2 system-ui, "Segoe UI", sans-serif;
+        color: #7dd8e8;
+        background: #0e1a2ccc;
+        padding: 8px 14px;
+        border-radius: 8px;
+      }
+
+      .battle-chrome-fleet {
+        position: absolute;
+        right: calc(25% + 16px);
+        top: 20px;
+      }
+
+      .battle-chrome-end {
+        position: absolute;
+        right: calc(25% + 16px);
+        bottom: 20px;
+        font-size: 18px;
+        color: #ffffff;
+        background: #2563ebcc;
+        padding: 12px 18px;
+      }
+
+      .battle-chrome-end:disabled {
+        opacity: 0.4;
+        cursor: default;
+      }
+
+      .campaign-nav {
+        position: absolute;
+        left: 0;
+        top: 16px;
+        width: 66.7%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 8px;
+        padding-right: 16px;
+        pointer-events: auto;
+      }
+
+      .campaign-fight {
+        position: absolute;
+        right: 4%;
+        bottom: 32px;
+        min-width: 220px;
+        font-size: 18px;
+        color: #ffffff;
+        background: #1f7a4a;
+        padding: 12px 22px;
+      }
+
+      .campaign-epilogue {
+        position: absolute;
+        right: 4%;
+        bottom: 32px;
+        width: min(360px, 28%);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        pointer-events: auto;
+      }
+
+      .campaign-epilogue[hidden],
+      .campaign-fight[hidden],
+      .battle-status-wave[hidden] {
+        display: none;
+      }
+
+      .battle-end-overlay,
+      .rules-overlay {
+        position: absolute;
+        inset: 0;
+        z-index: 24;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #0b0b0bcc;
+        font-family: system-ui, "Segoe UI", sans-serif;
+        color: #f4f4f5;
+      }
+
+      .battle-end-card,
+      .rules-panel {
+        width: min(560px, calc(100% - 32px));
+        padding: 28px 24px 24px;
+        border-radius: 16px;
+        background: #111827;
+        border: 1px solid #334155;
+      }
+
+      .battle-end-card h2 {
+        margin: 0 0 24px;
+        text-align: center;
+        font-size: 36px;
+        font-weight: 700;
+      }
+
+      .battle-end-card h2.is-win {
+        color: #4fe89a;
+      }
+
+      .battle-end-card h2.is-lose {
+        color: #ff6b6b;
+      }
+
+      .battle-end-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .battle-end-actions .settings-btn,
+      .rules-panel .settings-btn {
+        width: 100%;
+      }
+
+      .rules-panel {
+        max-height: min(92vh, 820px);
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .rules-scroll {
+        overflow: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        padding-right: 4px;
+      }
+
+      .rules-section h3 {
+        margin: 0 0 6px;
+        font-size: 16px;
+        color: #7dd8e8;
+      }
+
+      .rules-section p {
+        margin: 0;
+        font-size: 15px;
+        line-height: 1.45;
+        color: #e4e4e7;
+      }
+    </style>
+    <script src="/sdk.js"></script>
+  </head>
+  <body>
+    <div id="game-container"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

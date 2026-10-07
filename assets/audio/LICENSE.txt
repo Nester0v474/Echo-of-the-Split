@@ -1,0 +1,21 @@
+All audio in this folder is free for commercial use (CC0 / public domain).
+
+Kenney — Interface Sounds (CC0)
+https://kenney.nl/assets/interface-sounds
+  ui.wav     = click_002
+  select.wav = click_003
+  hire.wav   = confirmation_002
+  win.wav    = confirmation_004
+  lose.wav   = close_001
+
+Kenney — Sci-Fi Sounds (CC0)
+https://kenney.nl/assets/sci-fi-sounds
+  move.ogg    = forceField_000
+  attack.ogg  = laserSmall_000
+  explode.ogg = explosionCrunch_000
+
+yd — Observing the Star (CC0)
+https://opengameart.org/content/another-space-background-track
+  music.ogg
+
+Credit “Kenney.nl” and “yd” is appreciated, not required.

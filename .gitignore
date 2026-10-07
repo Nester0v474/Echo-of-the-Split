@@ -1,0 +1,9 @@
+node_modules
+dist
+.DS_Store
+*.local
+.yandex-stage
+.yandex-zip.ps1
+.audio-extract
+.audio-tmp.zip
+echo-raskola-yandex.zip
