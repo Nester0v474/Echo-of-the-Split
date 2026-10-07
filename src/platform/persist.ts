@@ -1,4 +1,4 @@
-/** Key-value backend used by progress and settings (Yandex storage or localStorage). */
+/** Key-value backend used by progress and settings (browser storage). */
 export interface PersistStore {
   getItem(key: string): string | null;
   setItem(key: string, value: string): void;

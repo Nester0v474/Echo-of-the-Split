@@ -8,9 +8,7 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "test": "vitest run",
-    "simulate": "vite-node src/dev/battleSimulator.ts",
-    "icons": "node scripts/make-icons.mjs",
-    "pack:yandex": "node scripts/pack-yandex.mjs"
+    "simulate": "vite-node src/dev/battleSimulator.ts"
   },
   "dependencies": {
     "phaser": "^3.87.0"

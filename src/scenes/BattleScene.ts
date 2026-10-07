@@ -35,7 +35,6 @@ import { STR, UNIT_NAMES_RU } from '../config/strings';
 import type { BattleUnit } from '../entities/Unit';
 import { BattleSystem } from '../systems/BattleSystem';
 import { HexGrid, hexKey, type Axial } from '../systems/HexGrid';
-import { gameplayStart, gameplayStop, showFullscreenAdv } from '../platform/yandex';
 import { ensureMusic, loadAudio, playSfx } from '../systems/Audio';
 import { difficultyMods, getSettings } from '../systems/Settings';
 import { markMissionCompleted } from '../systems/Progress';
@@ -170,7 +169,7 @@ export class BattleScene extends Phaser.Scene {
       },
       onMenu: () => {
         playSfx('ui');
-        void this.leaveBattle('MenuScene', Boolean(this.missionId));
+        this.leaveBattle('MenuScene');
       },
       onEndTurn: () => {
         playSfx('ui');
@@ -188,9 +187,7 @@ export class BattleScene extends Phaser.Scene {
     this.input.on('pointerdown', this.onPointerDown, this);
 
     if (!hasSeenTutorial()) {
-      showTutorial(() => gameplayStart());
-    } else {
-      gameplayStart();
+      showTutorial();
     }
 
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, this.shutdown, this);
@@ -203,7 +200,6 @@ export class BattleScene extends Phaser.Scene {
   }
 
   shutdown(): void {
-    gameplayStop();
     hideBattleChrome();
     hideBattleEnd();
     document.getElementById('battle-tutorial')?.remove();
@@ -217,17 +213,13 @@ export class BattleScene extends Phaser.Scene {
     this.settings?.destroy();
   }
 
-  private async leaveBattle(dest: string, withAd: boolean): Promise<void> {
+  private leaveBattle(dest: string): void {
     if (this.leaving) {
       return;
     }
     this.leaving = true;
     hideBattleEnd();
     hideBattleChrome();
-    gameplayStop();
-    if (withAd) {
-      await showFullscreenAdv();
-    }
     this.scene.start(dest);
   }
 
@@ -409,7 +401,6 @@ export class BattleScene extends Phaser.Scene {
         this.refreshStatus();
       }),
       ev.on('battle:ended', ({ winner, reason }) => {
-        gameplayStop();
         clearAllOverlays(this);
         const won = winner === 'player';
         const label = won ? STR.victory : reason === 'turn_limit' ? STR.timeOut : STR.defeat;
@@ -470,7 +461,7 @@ export class BattleScene extends Phaser.Scene {
       campaign: Boolean(this.missionId),
       onCampaign: () => {
         playSfx('ui');
-        void this.leaveBattle('CampaignScene', true);
+        this.leaveBattle('CampaignScene');
       },
       onRetry: () => {
         if (this.leaving) {
@@ -478,13 +469,12 @@ export class BattleScene extends Phaser.Scene {
         }
         playSfx('ui');
         this.leaving = true;
-        gameplayStop();
         hideBattleEnd();
         this.scene.restart({ missionId: this.missionId ?? undefined });
       },
       onMenu: () => {
         playSfx('ui');
-        void this.leaveBattle('MenuScene', Boolean(this.missionId));
+        this.leaveBattle('MenuScene');
       },
     });
   }

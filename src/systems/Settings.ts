@@ -1,4 +1,4 @@
-/** Player settings persisted via the platform store (Yandex or localStorage). */
+/** Player settings persisted in browser storage. */
 import { persistGet, persistSet } from '../platform/persist';
 export type Difficulty = 'easy' | 'normal' | 'hard';
 

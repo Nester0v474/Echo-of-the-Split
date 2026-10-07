@@ -1,14 +1,14 @@
 import Phaser from 'phaser';
 import { configureLayout } from './config/constants';
 import { createGameConfig } from './config/gameConfig';
-import { attachGame, ensureResumed, initPlatform } from './platform/yandex';
+import { attachGame, ensureResumed, initPlatform } from './platform/session';
 import { unlockAudio } from './systems/Audio';
 import { mountOrientationGuard } from './ui/OrientationGuard';
 
 async function boot(): Promise<void> {
   configureLayout();
   mountOrientationGuard();
-  await initPlatform();
+  initPlatform();
   attachGame(new Phaser.Game(createGameConfig()));
   ensureResumed();
 

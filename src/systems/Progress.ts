@@ -1,4 +1,4 @@
-/** Campaign progress persisted via the platform store (Yandex or localStorage). */
+/** Campaign progress persisted in browser storage. */
 import { persistGet, persistSet } from '../platform/persist';
 
 export type Ending = 'metropolis' | 'free' | null;

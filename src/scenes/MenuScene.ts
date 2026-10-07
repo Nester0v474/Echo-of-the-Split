@@ -2,7 +2,6 @@ import Phaser from 'phaser';
 import { GAME_WIDTH, GAME_HEIGHT, isPhoneLayout } from '../config/constants';
 import { BATTLE_BACKGROUNDS, BattleBackground } from '../config/backgrounds';
 import { STR } from '../config/strings';
-import { markGameReady } from '../platform/yandex';
 import { ensureMusic, loadAudio, playSfx } from '../systems/Audio';
 import { FONT, makeButton } from '../ui/UiKit';
 import { hideRules, showRules } from '../ui/RulesOverlay';
@@ -74,7 +73,6 @@ export class MenuScene extends Phaser.Scene {
 
     this.settings = new SettingsPanel(this);
     void loadAudio().then(() => ensureMusic());
-    markGameReady();
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => hideRules());
   }
 }

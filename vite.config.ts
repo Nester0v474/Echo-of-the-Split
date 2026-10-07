@@ -2,20 +2,6 @@ import { mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { defineConfig, type Plugin } from 'vitest/config';
 
-function yandexHtml(): Plugin {
-  return {
-    name: 'yandex-html',
-    transformIndexHtml(html) {
-      return html
-        .replace(/\s*<script src="[^"]*sdk\.js"><\/script>/g, '')
-        .replace(
-          /<script type="module"/,
-          '    <script src="/sdk.js"></script>\n    <script type="module"',
-        );
-    },
-  };
-}
-
 function copyGameAssets(): Plugin {
   const files: Array<[string, string]> = [
     ['assets/backgrounds/asteroids.png', 'dist/assets/backgrounds/asteroids.png'],
@@ -43,7 +29,7 @@ function copyGameAssets(): Plugin {
 
 export default defineConfig({
   base: './',
-  plugins: [copyGameAssets(), yandexHtml()],
+  plugins: [copyGameAssets()],
   build: {
     emptyOutDir: true,
     target: 'es2020',
